@@ -1,4 +1,3 @@
-
 function NoteCard({ title, body }) {
   return (
     <div>

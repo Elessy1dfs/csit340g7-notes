@@ -57,7 +57,7 @@ function Notes() {
               type="button"
               className="absolute top-4 right-5 cursor-pointer text-[26px] leading-none text-[#949494] hover:text-[#c18585]"
             >
-              
+             
             </button>
           </li>
         </ul>
@@ -65,5 +65,5 @@ function Notes() {
     </div>
   )
 }
-
+ 
 export default Notes
