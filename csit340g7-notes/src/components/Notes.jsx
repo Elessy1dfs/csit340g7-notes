@@ -25,11 +25,13 @@ function Notes() {
  }
  function handleSubmit(e) {
    e.preventDefault()
-   if (!form.title.trim() && !form.body.trim()) return
+   const trimmedTitle = form.title.trim()
+   const trimmedBody = form.body.trim()
+   if (!trimmedTitle || !trimmedBody) return
    const newNote = {
      id: Date.now(),
-     title: form.title,
-     body: form.body,
+     title: trimmedTitle,
+     body: trimmedBody,
    }
    setNotes([...notes, newNote])
    setForm({
