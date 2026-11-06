@@ -15,6 +15,13 @@ function Notes() {
     },
   ])
 
+  const [search, setSearch] = useState('')
+
+
+const filteredNotes = notes.filter((note) =>
+  note.title.toLowerCase().includes(search.toLowerCase())
+)
+
   const [form, setForm] = useState({
     title: "",
     body: "",
@@ -62,9 +69,11 @@ function Notes() {
           <div>
             <p className="mb-2 text-[13px] font-normal tracking-wide text-[#949494]">SEARCH</p>
             <input
-              placeholder="Search by title"
-              className="h-[52px] w-full border border-[#e6e6e6] px-4 text-lg outline-none placeholder:text-black/40 placeholder:italic focus:border-[#cf7d7d]"
-            />
+        value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      placeholder="Search by title"
+      className="h-[52px] w-full border border-[#e6e6e6] px-4 text-lg outline-none placeholder:text-black/40 placeholder:italic focus:border-[#cf7d7d]"
+      />
           </div>
           <form className="grid gap-3" onSubmit={handleSubmit}>
             <p className="text-[13px] font-normal tracking-wide text-[#949494]">NEW NOTE</p>
@@ -95,29 +104,28 @@ function Notes() {
       <section className="px-12 py-11">
         <h2 className="mb-6 text-3xl">All notes</h2>
         <ul className="grid grid-cols-3 items-start gap-5">
-          {notes.map((note) => (
-            <li
-              key={note.id}
-              className="relative min-h-32 bg-white px-6 py-5 shadow-[0_2px_4px_0_rgba(0,0,0,0.2),0_25px_50px_0_rgba(0,0,0,0.1)]"
-            >
-              <NoteCard
-                title={note.title}
-                body={note.body}
-              />
-              <button
-                type="button"
-                onClick={() => handleDelete(note.id)}
-                className="absolute top-4 right-5 cursor-pointer text-[26px] leading-none text-[#949494] hover:text-[#c18585]"
-              >
-                ×
-              </button>
-            </li>
-          ))}
-        </ul>
-        {notes.length === 0 && (
+  {filteredNotes.map((note) => (
+    <li
+      key={note.id}
+      className="relative min-h-32 bg-white px-6 py-5 shadow-[0_2px_4px_0_rgba(0,0,0,0.2),0_25px_50px_0_rgba(0,0,0,0.1)]"
+    >
+      <NoteCard
+        title={note.title}
+        body={note.body}
+      />
+      <button
+        type="button"
+        onClick={() => handleDelete(note.id)}
+        className="absolute top-4 right-5 cursor-pointer text-[26px] leading-none text-[#949494] hover:text-[#c18585]"
+      >
+        ×
+      </button>
+    </li>
+  ))}
+</ul>
+{filteredNotes.length === 0 && (
   <p className="text-lg text-[#949494]">No notes found</p>
 )}
-
       </section>
     </div>
   )
