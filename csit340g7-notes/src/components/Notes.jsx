@@ -1,5 +1,7 @@
-import { useState } from 'react'
+
+import { useState, useEffect } from 'react'
 import NoteCard from './NoteCard.jsx'
+
 
 function Notes() {
   const [notes, setNotes] = useState([
@@ -14,8 +16,12 @@ function Notes() {
       body: "Practice writing one handler for many inputs.",
     },
   ])
-
+  
   const [search, setSearch] = useState('')
+  useEffect(() => {
+    localStorage.setItem('notes', JSON.stringify(notes))
+   }, [notes])  
+  
 
 
 const filteredNotes = notes.filter((note) =>
