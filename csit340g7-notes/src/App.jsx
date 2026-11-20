@@ -6,6 +6,7 @@ import Info from './components/Info.jsx'
 function App() {
   const [large, setLarge] = useState(() => {
   return localStorage.getItem('large') === 'true'
+
 })
 
 useEffect(() => {
@@ -13,8 +14,9 @@ useEffect(() => {
 }, [large])
 
   return (
+
     <SettingsContext value={{ largeText, setLargeText }}>
-      <div className="bg-[#f5f5f5] font-light text-[#111]">
+      <div className="bg-[#f5f5f4] font-light text-[#111]">
         <Notes />
         <Info name="Juan Dela Cruz" />
       </div>

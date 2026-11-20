@@ -58,11 +58,10 @@ useEffect(() => {
 
   const [search, setSearch] = useState('')
 
-const [form, setForm] = useState({
-  title: "",
-  body: "",
+const [form, setForm] = useState(() => {
+  const saved = localStorage.getItem('draft')
+  return saved ? JSON.parse(saved) : { title: '', body: '' }
 })
-
   function handleChange(e) {
     setForm({
       ...form,
