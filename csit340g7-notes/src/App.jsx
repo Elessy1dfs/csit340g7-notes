@@ -4,7 +4,14 @@ import Notes from './components/Notes.jsx'
 import Info from './components/Info.jsx'
  
 function App() {
-  const [largeText, setLargeText] = useState(false)
+  const [large, setLarge] = useState(() => {
+  return localStorage.getItem('large') === 'true'
+})
+
+useEffect(() => {
+  localStorage.setItem('large', large)
+}, [large])
+
   return (
     <SettingsContext value={{ largeText, setLargeText }}>
       <div className="bg-[#f5f5f5] font-light text-[#111]">
