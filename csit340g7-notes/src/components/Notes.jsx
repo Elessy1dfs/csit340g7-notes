@@ -26,27 +26,38 @@ const [notes, setNotes] = useState(() => {
 
   
   const [search, setSearch] = useState('')
-  
-  useEffect(() => {
-    const storedNotes = localStorage.getItem('notes')
-    if (storedNotes) setNotes(JSON.parse(storedNotes))
-  }, [])
+
+useEffect(() => {
+  const saved = localStorage.getItem('notes')
+  if (saved) setNotes(JSON.parse(saved))
+}, [])
 
   
   useEffect(() => {
     localStorage.setItem('notes', JSON.stringify(notes))
    }, [notes])  
-  
+
+   useEffect(() => {
+     setTimeout(() => {
+      const id = setTimeout(() => {
+     localStorage.setItem('draft', JSON.stringify(form)) 
+     console.log('draft saved:', form.title)
+      }, 1000)
+      return () => clearTimeout(id)
+     }, [form]) 
+
 
 
 const filteredNotes = notes.filter((note) =>
   note.title.toLowerCase().includes(search.toLowerCase())
 )
 
-  const [form, setForm] = useState({
-    title: "",
-    body: "",
-  })
+  const [search, setSearch] = useState('')
+
+const [form, setForm] = useState({
+  title: "",
+  body: "",
+})
 
   function handleChange(e) {
     setForm({
@@ -150,6 +161,6 @@ const filteredNotes = notes.filter((note) =>
       </section>
     </div>
   )
-}
-
+   })
+  }
 export default Notes
