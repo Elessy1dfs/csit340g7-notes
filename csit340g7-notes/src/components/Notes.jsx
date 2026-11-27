@@ -62,7 +62,7 @@ function Notes() {
     })
   }
 
-  function handleSubmit(e) {
+ async function handleSubmit(e) {
     e.preventDefault()
 
     const trimmedTitle = form.title.trim()
@@ -75,11 +75,22 @@ function Notes() {
       title: trimmedTitle,
       body: trimmedBody,
     }
-
-    setNotes((prevNotes) => [...prevNotes, newNote])
-    setForm({ title: '', body: '' })
-    localStorage.removeItem('draft')
-    titleRef.current?.focus()
+  try {
+      const res = await fetch(API_URL + '/notes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, body }),
+      })
+      if (!res.ok) {
+        throw new Error('The server answered ' + res.status)
+      }
+      const newNote = await res.json()
+      setNotes([...notes, newNote])
+      setForm({ title: '', body: '' })
+      titleRef.current.focus()
+    } catch (err) {
+      setError(err.message)
+    }
   }
 
   const handleDelete = useCallback((id) => {
